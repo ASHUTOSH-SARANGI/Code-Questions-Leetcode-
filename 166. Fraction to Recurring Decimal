@@ -1,0 +1,30 @@
+class Solution(object):
+    def fractionToDecimal(self, numerator, denominator):
+        """
+        :type numerator: int
+        :type denominator: int
+        :rtype: str
+        """
+        if numerator == 0:
+            return "0"
+        result_parts = []
+        if (numerator > 0) is not (denominator > 0):
+            result_parts.append("-")
+        num, den = abs(numerator), abs(denominator)
+        integer_part, remainder = divmod(num, den)
+        result_parts.append(str(integer_part))
+        if remainder == 0:
+            return "".join(result_parts)
+        result_parts.append(".")
+        remainder_map = {}
+        while remainder != 0:
+            if remainder in remainder_map:
+                start_index = remainder_map[remainder]
+                result_parts.insert(start_index, "(")
+                result_parts.append(")")
+                break
+            remainder_map[remainder] = len(result_parts)
+            remainder *= 10
+            digit, remainder = divmod(remainder, den)
+            result_parts.append(str(digit))   
+        return "".join(result_parts)
