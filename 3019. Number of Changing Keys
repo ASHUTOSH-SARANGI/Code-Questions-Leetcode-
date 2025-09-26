@@ -1,0 +1,13 @@
+class Solution(object):
+    def countKeyChanges(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        cnt = 0
+        curr = s[0].lower()
+        for c in s[1:]:
+            if c.lower() != curr.lower():
+                cnt += 1
+                curr = c.lower()
+        return cnt
