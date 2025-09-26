@@ -1,0 +1,22 @@
+class Solution(object):
+    def triangleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums.sort()
+        n = len(nums)
+        cnt = 0
+        if n < 3:
+            return 0
+        for i in range(n-1 , 1, -1):
+            key = nums[i]
+            a = 0
+            b = i-1
+            while a < b:
+                if nums[a]+nums[b] > key:
+                    cnt += b-a
+                    b-=1
+                else:
+                    a+=1
+        return cnt
