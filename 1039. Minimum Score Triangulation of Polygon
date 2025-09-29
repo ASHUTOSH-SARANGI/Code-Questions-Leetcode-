@@ -1,0 +1,19 @@
+class Solution(object):
+    def minScoreTriangulation(self, values):
+        """
+        :type values: List[int]
+        :rtype: int
+        """
+        n = len(values)
+        @functools.lru_cache(None)
+        def solve(i, j):
+            min_ = float('inf')
+            if j < i +2:
+                return 0
+            for k in range(i + 1, j):
+                curr = values[i]*values[k]*values[j] 
+                sub = solve(i, k) + solve(k, j)
+                min_ = min(min_, curr + sub)
+            return min_
+        return solve(0, n-1)
+        
