@@ -1,0 +1,21 @@
+class Solution(object):
+    def maxBottlesDrunk(self, numBottles, numExchange):
+        """
+        :type numBottles: int
+        :type numExchange: int
+        :rtype: int
+        """
+        total = 0
+        empty = 0
+        curr = numBottles
+        while curr > 0:
+            total += curr
+            empty += curr
+            curr = 0
+            if empty >= numExchange:
+                empty -= numExchange
+                curr += 1
+                numExchange += 1
+        return total
+
+
