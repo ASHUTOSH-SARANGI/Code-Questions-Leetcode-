@@ -1,0 +1,22 @@
+import math
+class Solution(object):
+    def minEatingSpeed(self, piles, h):
+        """
+        :type piles: List[int]
+        :type h: int
+        :rtype: int
+        """
+        def kworks(mid):
+            tot = 0
+            for i in piles:
+                tot += math.ceil(float(i) / mid)
+            return tot<=h  
+        l = 1
+        r = max(piles)
+        while l < r:
+            k = (l+r)//2
+            if kworks(k):
+                r = k
+            else:
+                l = k + 1
+        return l
