@@ -1,0 +1,30 @@
+class Solution(object):
+    def successfulPairs(self, spells, potions, success):
+        """
+        :type spells: List[int]
+        :type potions: List[int]
+        :type success: int
+        :rtype: List[int]
+        """
+        def bs(arr, key):
+            s = 0
+            e = len(arr)
+            while s < e:
+                mid = (s + e) // 2
+                if arr[mid] < key:
+                    s = mid + 1
+                else:
+                    e = mid
+            return s
+
+        n = len(spells)
+        m = len(potions)
+        potions.sort()
+        pairs = [0] * n
+        for i in range(n):
+            cnt = spells[i]
+            key = (success + cnt - 1) // cnt
+            ins = bs(potions, key)
+            req = m - ins
+            pairs[i] = req
+        return pairs
