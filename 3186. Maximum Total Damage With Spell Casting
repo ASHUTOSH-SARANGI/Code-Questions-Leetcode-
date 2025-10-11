@@ -1,0 +1,16 @@
+class Solution:
+    def maximumTotalDamage(self, power: List[int]) -> int:
+        freq = defaultdict(int)
+        for i in power:
+            freq[i] += 1
+        lst = sorted(list(freq.keys()))    
+        n = len(lst)
+        maxi = 0
+        j = 0
+        dp = [0] * n 
+        for i in range(n):
+            while j < i and lst[j] < lst[i] - 2:
+                maxi = max(maxi, dp[j])
+                j += 1
+            dp[i] = maxi + lst[i] * freq[lst[i]]
+        return max(dp)
