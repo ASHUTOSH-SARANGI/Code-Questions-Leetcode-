@@ -1,0 +1,11 @@
+class Solution:
+    def removeAnagrams(self, words: List[str]) -> List[str]:
+        if not words:
+            return []
+        lst = [words[0]]
+        for i in range(1, len(words)):
+            x = "".join(sorted(words[i - 1]))
+            y = "".join(sorted(words[i]))
+            if x != y:
+                lst.append(words[i])
+        return lst
