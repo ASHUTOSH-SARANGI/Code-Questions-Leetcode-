@@ -1,0 +1,11 @@
+class Solution:
+    def findSmallestInteger(self, nums: List[int], value: int) -> int:
+        freq = defaultdict(int)
+        for i in nums:
+            freq[i % value] += 1
+        n = 0
+        while True:
+            if freq[n % value] == 0:
+                return n
+            freq[n % value] -= 1
+            n += 1
