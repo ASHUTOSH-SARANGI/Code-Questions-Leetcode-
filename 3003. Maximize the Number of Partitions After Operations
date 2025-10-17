@@ -1,0 +1,24 @@
+class Solution:
+    def maxPartitionsAfterOperations(self, s: str, k: int) -> int:
+        @cache
+        def dp(mask, ch, i):
+            if i == len(s):
+                return 1
+            best = 0
+            curr = ord(s[i]) - ord('a')
+            new_mask = mask | (1 << curr)
+            if new_mask.bit_count() <= k:
+                best = max(best, dp(new_mask, ch, i + 1))
+            else:
+                best = max(best, dp(1<<curr, ch, i +1) + 1)
+            if not ch:
+                for j in range(26):
+                    if j == curr:
+                        continue
+                    new_mask = mask | (1 << j)
+                    if new_mask.bit_count() <= k:
+                        best = max(best, dp(new_mask, True, i + 1))
+                    else:
+                        best = max(best, dp(1 << j, True, i + 1) + 1)
+            return best
+        return dp(0, False, 0)
