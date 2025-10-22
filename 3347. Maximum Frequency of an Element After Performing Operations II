@@ -1,0 +1,25 @@
+class Solution:
+    def maxFrequency(self, nums: List[int], k: int, numOperations: int) -> int:
+        nums.sort()
+        n = len(nums)
+        res = 0
+
+        freq = defaultdict(int)
+        l = 0
+        r = 0
+        for i in nums:
+            while r < n and nums[r] <= i + k:
+                freq[nums[r]] += 1
+                r += 1
+            while l < n and nums[l] < i - k:
+                freq[nums[l]] -= 1
+                l += 1
+            max_ops = r - l - freq[i]
+            res = max(res, min(max_ops, numOperations) + freq[i])
+        l = 0 
+        for r in range(n):
+            while l < n and nums[l] + (k * 2) < nums[r]:
+                l += 1
+            max_ops = r - l + 1
+            res = max(res, min(max_ops,numOperations))
+        return res
