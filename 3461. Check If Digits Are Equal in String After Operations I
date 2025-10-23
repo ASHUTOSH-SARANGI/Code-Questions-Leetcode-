@@ -1,0 +1,12 @@
+class Solution:
+    def hasSameDigits(self, s: str) -> bool:
+        n = len(s)
+        while n > 2:
+            newdigi = []
+            for i in range(len(s) - 1):
+                j = i + 1
+                newdigi.append(str((int(s[i]) + int(s[j])) % 10))
+            s = "".join(newdigi)
+            n -= 1
+        return True if int(s[0]) == int(s[1]) else False 
+        
