@@ -1,0 +1,11 @@
+class Solution:
+    def nextBeautifulNumber(self, n: int) -> int:
+        for n in range(n + 1, 10**7):
+            freq = Counter(str(n))
+            found = False
+            for char, count in freq.items():
+                if char != str(count):
+                    found = True
+                    break
+            if found: continue
+            return n
