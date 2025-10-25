@@ -1,0 +1,15 @@
+class Solution:
+    def totalMoney(self, n: int) -> int:
+        days = 1
+        sums = 0
+        i = 1
+        for _ in range(n):
+           sums += (i + days -1)
+           days += 1
+           if days > 7:
+            days = 1
+            i += 1
+        return sums
+            
+        
+
