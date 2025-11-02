@@ -1,0 +1,24 @@
+class Solution:
+    def countUnguarded(self, m: int, n: int, guards: List[List[int]], walls: List[List[int]]) -> int:
+        direct = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+        wall = set()
+        seen = set()
+        for r, c in walls:
+            seen.add((r, c))
+            wall.add((r, c))
+        q = deque()
+        for r, c in guards:
+            seen.add((r, c))
+            wall.add((r, c))
+            for d in range(4):
+                q.append((r, c, d))
+        while q:
+            r, c, d = q.popleft()
+            dr, dc = direct[d]
+            nr = r + dr
+            nc = c + dc
+            if nr < 0 or nr >= m or nc < 0 or nc >= n or (nr, nc) in wall:
+                continue
+            q.append((nr, nc, d))
+            seen.add((nr, nc))
+        return (n * m) - len(seen)
