@@ -1,0 +1,26 @@
+class Solution:
+    def minOperations(self, nums: List[int]) -> int:
+        def gcd(a, b):
+            if a % b == 0:
+                return b
+            return gcd(b % a, a)
+        n = len(nums)
+        o = 0
+        g = 0
+        for i in nums:
+            g = gcd(g, i)
+            if i == 1:
+                o += 1
+        if g > 1:
+            return -1 
+        elif o > 0:
+            return n - o
+        mlen = n
+        for i in range(n):
+            g = 0
+            for j in range(i, n):
+                g = gcd(g, nums[j])
+                if g == 1:
+                    mlen = min(mlen, j - i + 1)
+                    break
+        return (mlen - 1) + (n - 1)
