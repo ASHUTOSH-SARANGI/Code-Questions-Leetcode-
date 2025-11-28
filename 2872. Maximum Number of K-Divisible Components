@@ -1,0 +1,30 @@
+class Solution:
+    def maxKDivisibleComponents(self, n: int, edges: List[List[int]], values: List[int], k: int) -> int:
+        if n == 1:
+            return 1
+        adj = defaultdict(list)
+        indegree = defaultdict(int)
+        for a, b in edges:
+            adj[a].append(b)
+            adj[b].append(a)
+            indegree[a] += 1
+            indegree[b] += 1
+        q = deque(node for node in range(n) if indegree[node] == 1)
+        res = 0
+        while q:
+            node = q.popleft()
+            indegree[node] -= 1
+            to_add =0
+            if values[node] % k == 0:
+                res += 1
+            else:
+                to_add = values[node]
+            for nei in adj[node]:
+                if indegree[nei] == 0: continue
+                indegree[nei] -= 1
+                values[nei] += to_add
+                if indegree[nei] == 1:
+                    q.append(nei)
+        return res
+
+        
