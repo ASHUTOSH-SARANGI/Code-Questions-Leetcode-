@@ -1,0 +1,16 @@
+class Solution:
+    def minSubarray(self, nums: List[int], p: int) -> int:
+        n = len(nums)
+        tar = sum(nums) % p
+        if tar == 0: return 0
+        pr = 0
+        seen = {0: -1}
+        res = n
+        for i in range(n):
+            pr = (pr + nums[i]) % p
+            pl = (pr - tar) % p
+            if pl in seen: res = min(res, i - seen[pl])
+            seen[pr] = i
+            
+        return res if res != n else -1
+        
