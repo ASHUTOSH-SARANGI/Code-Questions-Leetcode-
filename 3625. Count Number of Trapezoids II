@@ -1,0 +1,36 @@
+class Solution:
+    def countTrapezoids(self, points: List[List[int]]) -> int:
+        si = defaultdict(list)
+        ms = defaultdict(list)
+        n = len(points)
+        for i in range(n):
+            x1, y1 = points[i]
+            for j in range(i + 1, n):
+                x2, y2 = points[j]
+                dx, dy = x2 - x1, y2 - y1
+                if dx != 0:
+                    s = dy/dx
+                    b = (y1 * dx - x1 * dy) / dx
+                else:
+                    s = inf
+                    b = x1
+                si[s].append(b)
+                mid = (x1 + x2, y1 + y2)
+                ms[mid].append(s)
+        res = 0
+        for i in si.values():
+            if len(i) == 1:
+                continue
+            c = Counter(i)
+            acc = 0
+            for count in c.values():
+                res += acc * count
+                acc += count
+        for sl in ms.values():
+            if len(sl) == 1: continue
+            c = Counter(sl)
+            acc = 0
+            for count in c.values():
+                res -= acc * count
+                acc += count
+        return res
